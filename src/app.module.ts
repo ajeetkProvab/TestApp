@@ -3,11 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
+import { GraphQLModule } from '@nestjs/graphql';
+import { Users } from './users/graphQL/user.entity';
 
 @Module({
   imports: [
     UsersModule,
+    GraphQLModule.forRoot({
+      include: [UsersModule],
+      autoSchemaFile: true,
+      playground: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -15,7 +21,7 @@ import { User } from './users/user.entity';
       username: 'root',
       password: '',
       database: 'test',
-      entities: [User],
+      entities: [Users],
       synchronize: true,
     }),
   ],

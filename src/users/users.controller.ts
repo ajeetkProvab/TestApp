@@ -7,7 +7,7 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { User } from './user.entity';
+import { Users } from './graphQL/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -15,15 +15,15 @@ export class UsersController {
   constructor(private UsersService: UsersService) {}
 
   @Get()
-  index(): Promise<User[]> {
+  index(): Promise<Users[]> {
     return this.UsersService.findAll();
   }
   @Post('create')
-  async create(@Body() userData: User): Promise<any> {
+  async create(@Body() userData: Users): Promise<any> {
     return this.UsersService.create(userData);
   }
   @Put(':id/update')
-  async update(@Param('id') id, @Body() userData: User): Promise<any> {
+  async update(@Param('id') id, @Body() userData: Users): Promise<any> {
     userData.id = Number(id);
     console.log('Update #' + userData.id);
     return this.UsersService.update(userData);

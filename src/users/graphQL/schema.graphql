@@ -1,0 +1,27 @@
+type Query {
+  Users: [Users]!
+  User(id: Int): User!
+}
+
+type Mutation {
+  createUser(User: UserInput): User
+}
+
+type User @cacheControl(maxAge: 240) {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  city: String
+  country: String
+}
+
+input UserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  city: String
+  country: String
+}
